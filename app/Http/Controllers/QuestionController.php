@@ -24,9 +24,25 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate([
+            'nama'       => 'required|min:5|max:10',
+            'email'      => ['required', 'email'],
+            'pertanyaan' => 'required|max:300|min:10',
+        ], [
+            'nama.required'       => 'Nama tidak boleh kosong',
+            'nama.min'            => 'Nama minimal 5 karakter',
+            'nama.max'            => 'Nama maksimal 10 karakter',
+            'email.required'      => 'Email tidak boleh kosong',
+            'email.email'         => 'Email tidak valid',
+            'pertanyaan.required' => 'Pertanyaan tidak boleh kosong',
+            'pertanyaan.min'      => 'Pertanyaan minimal 10 karakter',
+            'pertanyaan.max'      => 'Pertanyaan maksimal 300 karakter',
+        ]);
+
         $nama       = $request->nama;
         $email      = $request->email;
         $pertanyaan = $request->pertanyaan;
